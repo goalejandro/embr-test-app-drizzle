@@ -6,8 +6,13 @@ run:
   port: 3000
   startCommand: node server.js
 
-database:
-  enabled: true
-  engine: postgres
-  framework: drizzle
-  seed: node db/seed.js
+dependencies:
+  - name: db
+    type: postgres
+    required: true
+    provides:
+      - name: DATABASE_URL
+        secret: true
+    database:
+      migrate: "npx drizzle-kit migrate"
+      seed: "node db/seed.js"
